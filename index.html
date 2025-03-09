@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - La Tua Esperienza</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        h1 {
+            color: #4a4a4a;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        
+        .rating > input {
+            display: none;
+        }
+        
+        .rating > label {
+            position: relative;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ddd;
+        }
+        
+        .rating > label:before {
+            content: "★";
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .rating > label:hover:before,
+        .rating > label:hover ~ label:before,
+        .rating > input:checked ~ label:before {
+            opacity: 1;
+            color: #ffc107;
+        }
+        
+        .rating > input:checked ~ label {
+            color: #ffc107;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .success-message {
+            display: none;
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .category-rating {
+            margin-bottom: 15px;
+        }
+        
+        .category-label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .stars {
+            display: flex;
+        }
+        
+        .stars label {
+            margin-right: 5px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ddd;
+        }
+        
+        .stars input {
+            display: none;
+        }
+        
+        .stars label.active {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div id="feedback-form">
+        <h1>Il Tuo Feedback</h1>
+        <p>Grazie per aver scelto il nostro ristorante. Ci piacerebbe sapere cosa ne pensi della tua esperienza. I tuoi commenti ci aiuteranno a migliorare il nostro servizio.</p>
+        
+        <div class="form-group">
+            <label for="visit-date">Data della visita:</label>
+            <input type="date" id="visit-date" name="visit-date">
+        </div>
+        
+        <div class="form-group">
+            <label>Valutazione complessiva:</label>
+            <div class="rating">
+                <input type="radio" id="star5" name="overall-rating" value="5">
+                <label for="star5" title="Eccellente">★</label>
+                <input type="radio" id="star4" name="overall-rating" value="4">
+                <label for="star4" title="Molto buono">★</label>
+                <input type="radio" id="star3" name="overall-rating" value="3">
+                <label for="star3" title="Buono">★</label>
+                <input type="radio" id="star2" name="overall-rating" value="2">
+                <label for="star2" title="Discreto">★</label>
+                <input type="radio" id="star1" name="overall-rating" value="1">
+                <label for="star1" title="Scarso">★</label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="category-rating">
+                <div class="category-label">Qualità del cibo:</div>
+                <div class="stars" data-category="food">
+                    <input type="radio" id="food5" name="food-rating" value="5">
+                    <label for="food5" onclick="setRating('food', 5)">★</label>
+                    <input type="radio" id="food4" name="food-rating" value="4">
+                    <label for="food4" onclick="setRating('food', 4)">★</label>
+                    <input type="radio" id="food3" name="food-rating" value="3">
+                    <label for="food3" onclick="setRating('food', 3)">★</label>
+                    <input type="radio" id="food2" name="food-rating" value="2">
+                    <label for="food2" onclick="setRating('food', 2)">★</label>
+                    <input type="radio" id="food1" name="food-rating" value="1">
+                    <label for="food1" onclick="setRating('food', 1)">★</label>
+                </div>
+            </div>
+            
+            <div class="category-rating">
+                <div class="category-label">Servizio:</div>
+                <div class="stars" data-category="service">
+                    <input type="radio" id="service5" name="service-rating" value="5">
+                    <label for="service5" onclick="setRating('service', 5)">★</label>
+                    <input type="radio" id="service4" name="service-rating" value="4">
+                    <label for="service4" onclick="setRating('service', 4)">★</label>
+                    <input type="radio" id="service3" name="service-rating" value="3">
+                    <label for="service3" onclick="setRating('service', 3)">★</label>
+                    <input type="radio" id="service2" name="service-rating" value="2">
+                    <label for="service2" onclick="setRating('service', 2)">★</label>
+                    <input type="radio" id="service1" name="service-rating" value="1">
+                    <label for="service1" onclick="setRating('service', 1)">★</label>
+                </div>
+            </div>
+            
+            <div class="category-rating">
+                <div class="category-label">Ambiente:</div>
+                <div class="stars" data-category="ambience">
+                    <input type="radio" id="ambience5" name="ambience-rating" value="5">
+                    <label for="ambience5" onclick="setRating('ambience', 5)">★</label>
+                    <input type="radio" id="ambience4" name="ambience-rating" value="4">
+                    <label for="ambience4" onclick="setRating('ambience', 4)">★</label>
+                    <input type="radio" id="ambience3" name="ambience-rating" value="3">
+                    <label for="ambience3" onclick="setRating('ambience', 3)">★</label>
+                    <input type="radio" id="ambience2" name="ambience-rating" value="2">
+                    <label for="ambience2" onclick="setRating('ambience', 2)">★</label>
+                    <input type="radio" id="ambience1" name="ambience-rating" value="1">
+                    <label for="ambience1" onclick="setRating('ambience', 1)">★</label>
+                </div>
+            </div>
+            
+            <div class="category-rating">
+                <div class="category-label">Rapporto qualità-prezzo:</div>
+                <div class="stars" data-category="value">
+                    <input type="radio" id="value5" name="value-rating" value="5">
+                    <label for="value5" onclick="setRating('value', 5)">★</label>
+                    <input type="radio" id="value4" name="value-rating" value="4">
+                    <label for="value4" onclick="setRating('value', 4)">★</label>
+                    <input type="radio" id="value3" name="value-rating" value="3">
+                    <label for="value3" onclick="setRating('value', 3)">★</label>
+                    <input type="radio" id="value2" name="value-rating" value="2">
+                    <label for="value2" onclick="setRating('value', 2)">★</label>
+                    <input type="radio" id="value1" name="value-rating" value="1">
+                    <label for="value1" onclick="setRating('value', 1)">★</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="liked">Cosa ti è piaciuto di più?</label>
+            <textarea id="liked" name="liked" placeholder="Condividi la tua esperienza positiva..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="improve">Cosa potremmo migliorare?</label>
+            <textarea id="improve" name="improve" placeholder="I tuoi suggerimenti ci aiutano a migliorare..."></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="recommend">Consiglieresti il nostro ristorante a un amico?</label>
+            <select id="recommend" name="recommend">
+                <option value="">- Seleziona -</option>
+                <option value="definitely">Sicuramente sì</option>
+                <option value="probably">Probabilmente sì</option>
+                <option value="not-sure">Non sono sicuro</option>
+                <option value="probably-not">Probabilmente no</option>
+                <option value="definitely-not">Sicuramente no</option>
+            </select>
+        </div>
+        
+        <button type="button" onclick="submitFeedback()">Invia feedback</button>
+    </div>
+    
+    <div id="success-message" class="success-message">
+        <h2>Grazie per il tuo feedback!</h2>
+        <p>Apprezziamo il tempo che hai dedicato a condividere la tua esperienza con noi. Il tuo feedback ci aiuta a migliorare continuamente.</p>
+    </div>
+    
+    <script>
+        function setRating(category, rating) {
+            const stars = document.querySelector(`.stars[data-category="${category}"]`).getElementsByTagName('label');
+            
+            for (let i = 0; i < stars.length; i++) {
+                if (i < rating) {
+                    stars[i].classList.add('active');
+                } else {
+                    stars[i].classList.remove('active');
+                }
+            }
+            
+            document.getElementById(`${category}${rating}`).checked = true;
+        }
+        
+        function submitFeedback() {
+            // In una versione reale, qui ci sarebbe il codice per inviare i dati a un server
+            // Per ora, mostriamo solo un messaggio di successo
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Se volessi salvare i dati localmente (per demo)
+            const feedbackData = {
+                visitDate: document.getElementById('visit-date').value,
+                overallRating: document.querySelector('input[name="overall-rating"]:checked')?.value,
+                foodRating: document.querySelector('input[name="food-rating"]:checked')?.value,
+                serviceRating: document.querySelector('input[name="service-rating"]:checked')?.value,
+                ambienceRating: document.querySelector('input[name="ambience-rating"]:checked')?.value,
+                valueRating: document.querySelector('input[name="value-rating"]:checked')?.value,
+                liked: document.getElementById('liked').value,
+                improve: document.getElementById('improve').value,
+                recommend: document.getElementById('recommend').value
+            };
+            
+            console.log('Feedback inviato:', feedbackData);
+        }
+    </script>
+</body>
+</html>
