@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback - La Tua Esperienza</title>
+    <title>Feedback - Donna Rachele</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,7 +18,15 @@
         h1 {
             color: #4a4a4a;
             text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .restaurant-name {
+            font-size: 1.4em;
+            text-align: center;
             margin-bottom: 30px;
+            font-style: italic;
+            color: #555;
         }
         
         .form-group {
@@ -153,34 +161,80 @@
             text-align: center;
             animation: fadeIn 0.5s;
         }
+
+        .language-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .language-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-btn:hover {
+            background-color: #efefef;
+        }
+
+        .language-btn.active {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .language-btn img {
+            width: 24px;
+            height: 16px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
+    <!-- Selettore lingua -->
+    <div class="language-selector">
+        <div class="language-btn active" data-lang="it">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/640px-Flag_of_Italy.svg.png" alt="Italiano">
+            Italiano
+        </div>
+        <div class="language-btn" data-lang="en">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/640px-Flag_of_the_United_States.svg.png" alt="English">
+            English
+        </div>
+    </div>
+    
     <form id="feedback-form" action="https://formspree.io/f/mdkepaqd" method="POST">
-        <h1>La Tua Esperienza</h1>
-        <p class="text-center">Grazie per aver scelto il nostro ristorante. Ci piacerebbe sapere cosa ne pensi.</p>
+        <h1 id="form-title">La Tua Esperienza</h1>
+        <div class="restaurant-name">Donna Rachele</div>
+        <p class="text-center" id="form-intro">Grazie per aver scelto il nostro ristorante. Ci piacerebbe sapere cosa ne pensi.</p>
         
         <div class="progress-bar">
             <div class="progress" id="progress-bar"></div>
         </div>
         
         <div class="progress-indicator">
-            <div class="step active">Inizio</div>
-            <div class="step">Cibo</div>
-            <div class="step">Servizio</div>
-            <div class="step">Ambiente</div>
-            <div class="step">Conclusione</div>
+            <div class="step active" id="step1">Inizio</div>
+            <div class="step" id="step2">Cibo</div>
+            <div class="step" id="step3">Servizio</div>
+            <div class="step" id="step4">Ambiente</div>
+            <div class="step" id="step5">Conclusione</div>
         </div>
         
         <!-- Domanda 1: Data e valutazione generale -->
         <div class="question-container active" id="question1">
             <div class="form-group">
-                <label for="visit-date">Quando ci hai visitato?</label>
+                <label for="visit-date" id="date-label">Quando ci hai visitato?</label>
                 <input type="date" id="visit-date" name="visit-date">
             </div>
             
             <div class="form-group">
-                <label>Nel complesso, come valuteresti la tua esperienza?</label>
+                <label id="overall-label">Nel complesso, come valuteresti la tua esperienza?</label>
                 <div class="star-rating" id="overall-rating">
                     <input type="radio" id="overall-5" name="overall-rating" value="5">
                     <label for="overall-5" title="Eccellente"></label>
@@ -195,13 +249,13 @@
                 </div>
             </div>
             
-            <button type="button" onclick="nextQuestion(1)">Continua</button>
+            <button type="button" onclick="nextQuestion(1)" id="continue-btn1">Continua</button>
         </div>
         
         <!-- Domanda 2: Cibo -->
         <div class="question-container" id="question2">
             <div class="form-group">
-                <label>Come valuteresti la qualità del cibo?</label>
+                <label id="food-label">Come valuteresti la qualità del cibo?</label>
                 <div class="star-rating" id="food-rating">
                     <input type="radio" id="food-5" name="food-rating" value="5">
                     <label for="food-5" title="Eccellente"></label>
@@ -223,13 +277,13 @@
                 </div>
             </div>
             
-            <button type="button" onclick="nextQuestion(2)">Continua</button>
+            <button type="button" onclick="nextQuestion(2)" id="continue-btn2">Continua</button>
         </div>
         
         <!-- Domanda 3: Servizio -->
         <div class="question-container" id="question3">
             <div class="form-group">
-                <label>Come valuteresti il servizio?</label>
+                <label id="service-label">Come valuteresti il servizio?</label>
                 <div class="star-rating" id="service-rating">
                     <input type="radio" id="service-5" name="service-rating" value="5">
                     <label for="service-5" title="Eccellente"></label>
@@ -251,13 +305,13 @@
                 </div>
             </div>
             
-            <button type="button" onclick="nextQuestion(3)">Continua</button>
+            <button type="button" onclick="nextQuestion(3)" id="continue-btn3">Continua</button>
         </div>
         
         <!-- Domanda 4: Ambiente -->
         <div class="question-container" id="question4">
             <div class="form-group">
-                <label>Come valuteresti l'ambiente del ristorante?</label>
+                <label id="ambience-label">Come valuteresti l'ambiente del ristorante?</label>
                 <div class="star-rating" id="ambience-rating">
                     <input type="radio" id="ambience-5" name="ambience-rating" value="5">
                     <label for="ambience-5" title="Eccellente"></label>
@@ -279,38 +333,191 @@
                 </div>
             </div>
             
-            <button type="button" onclick="nextQuestion(4)">Continua</button>
+            <button type="button" onclick="nextQuestion(4)" id="continue-btn4">Continua</button>
         </div>
         
         <!-- Domanda 5: Conclusione -->
         <div class="question-container" id="question5">
             <div class="form-group">
-                <label for="recommend">Consiglieresti il nostro ristorante a un amico?</label>
+                <label for="recommend" id="recommend-label">Consiglieresti il nostro ristorante a un amico?</label>
                 <select id="recommend" name="recommend">
-                    <option value="">- Seleziona -</option>
-                    <option value="definitely">Sicuramente sì</option>
-                    <option value="probably">Probabilmente sì</option>
-                    <option value="not-sure">Non sono sicuro</option>
-                    <option value="probably-not">Probabilmente no</option>
-                    <option value="definitely-not">Sicuramente no</option>
+                    <option value="" id="select-option">- Seleziona -</option>
+                    <option value="definitely" id="definitely-option">Sicuramente sì</option>
+                    <option value="probably" id="probably-option">Probabilmente sì</option>
+                    <option value="not-sure" id="not-sure-option">Non sono sicuro</option>
+                    <option value="probably-not" id="probably-not-option">Probabilmente no</option>
+                    <option value="definitely-not" id="definitely-not-option">Sicuramente no</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <label for="additional-comments">Altri commenti o suggerimenti?</label>
+                <label for="additional-comments" id="additional-comments-label">Altri commenti o suggerimenti?</label>
                 <textarea id="additional-comments" name="additional-comments"></textarea>
             </div>
             
-            <button type="submit">Invia feedback</button>
+            <input type="hidden" id="language-used" name="language-used" value="it">
+            <button type="submit" id="submit-btn">Invia feedback</button>
         </div>
     </form>
     
     <div id="success-message" class="success-message">
-        <h2>Grazie per il tuo feedback!</h2>
-        <p>Apprezziamo il tempo che hai dedicato a condividere la tua esperienza con noi. Il tuo feedback ci aiuta a migliorare continuamente.</p>
+        <h2 id="thank-you-title">Grazie per il tuo feedback!</h2>
+        <p id="thank-you-message">Apprezziamo il tempo che hai dedicato a condividere la tua esperienza con noi. Il tuo feedback ci aiuta a migliorare continuamente.</p>
     </div>
     
     <script>
+        // Dizionario per le traduzioni
+        const translations = {
+            it: {
+                formTitle: "La Tua Esperienza",
+                formIntro: "Grazie per aver scelto il nostro ristorante. Ci piacerebbe sapere cosa ne pensi.",
+                step1: "Inizio",
+                step2: "Cibo",
+                step3: "Servizio",
+                step4: "Ambiente",
+                step5: "Conclusione",
+                dateLabel: "Quando ci hai visitato?",
+                overallLabel: "Nel complesso, come valuteresti la tua esperienza?",
+                foodLabel: "Come valuteresti la qualità del cibo?",
+                serviceLabel: "Come valuteresti il servizio?",
+                ambienceLabel: "Come valuteresti l'ambiente del ristorante?",
+                foodPositiveFollow: "Cosa ti è piaciuto di più del cibo?",
+                foodNegativeFollow: "Cosa potremmo migliorare riguardo al cibo?",
+                servicePositiveFollow: "Cosa ti è piaciuto del nostro servizio?",
+                serviceNegativeFollow: "Come potremmo migliorare il nostro servizio?",
+                ambiencePositiveFollow: "Cosa ti è piaciuto dell'ambiente?",
+                ambienceNegativeFollow: "Come potremmo migliorare l'ambiente?",
+                recommendLabel: "Consiglieresti il nostro ristorante a un amico?",
+                selectOption: "- Seleziona -",
+                definitelyOption: "Sicuramente sì",
+                probablyOption: "Probabilmente sì",
+                notSureOption: "Non sono sicuro",
+                probablyNotOption: "Probabilmente no",
+                definitelyNotOption: "Sicuramente no",
+                additionalCommentsLabel: "Altri commenti o suggerimenti?",
+                continueBtn: "Continua",
+                submitBtn: "Invia feedback",
+                thankYouTitle: "Grazie per il tuo feedback!",
+                thankYouMessage: "Apprezziamo il tempo che hai dedicato a condividere la tua esperienza con noi. Il tuo feedback ci aiuta a migliorare continuamente.",
+                dateAlert: "Per favore, seleziona la data della tua visita.",
+                ratingAlert: "Per favore, seleziona una valutazione.",
+                recommendAlert: "Per favore, seleziona se consiglieresti il nostro ristorante."
+            },
+            en: {
+                formTitle: "Your Experience",
+                formIntro: "Thank you for choosing our restaurant. We would love to hear what you think.",
+                step1: "Start",
+                step2: "Food",
+                step3: "Service",
+                step4: "Ambience",
+                step5: "Conclusion",
+                dateLabel: "When did you visit us?",
+                overallLabel: "Overall, how would you rate your experience?",
+                foodLabel: "How would you rate the food quality?",
+                serviceLabel: "How would you rate the service?",
+                ambienceLabel: "How would you rate the restaurant ambience?",
+                foodPositiveFollow: "What did you like most about the food?",
+                foodNegativeFollow: "What could we improve about the food?",
+                servicePositiveFollow: "What did you like about our service?",
+                serviceNegativeFollow: "How could we improve our service?",
+                ambiencePositiveFollow: "What did you like about the ambience?",
+                ambienceNegativeFollow: "How could we improve the ambience?",
+                recommendLabel: "Would you recommend our restaurant to a friend?",
+                selectOption: "- Select -",
+                definitelyOption: "Definitely yes",
+                probablyOption: "Probably yes",
+                notSureOption: "Not sure",
+                probablyNotOption: "Probably not",
+                definitelyNotOption: "Definitely not",
+                additionalCommentsLabel: "Any other comments or suggestions?",
+                continueBtn: "Continue",
+                submitBtn: "Submit feedback",
+                thankYouTitle: "Thank you for your feedback!",
+                thankYouMessage: "We appreciate the time you took to share your experience with us. Your feedback helps us continuously improve.",
+                dateAlert: "Please select the date of your visit.",
+                ratingAlert: "Please select a rating.",
+                recommendAlert: "Please select if you would recommend our restaurant."
+            }
+        };
+        
+        // Funzione per tradurre l'interfaccia
+        function translateUI(language) {
+            const translation = translations[language];
+            
+            // Imposta la lingua selezionata nel form
+            document.getElementById('language-used').value = language;
+            
+            // Traduce titoli e introduzione
+            document.getElementById('form-title').textContent = translation.formTitle;
+            document.getElementById('form-intro').textContent = translation.formIntro;
+            
+            // Traduce i passaggi
+            document.getElementById('step1').textContent = translation.step1;
+            document.getElementById('step2').textContent = translation.step2;
+            document.getElementById('step3').textContent = translation.step3;
+            document.getElementById('step4').textContent = translation.step4;
+            document.getElementById('step5').textContent = translation.step5;
+            
+            // Traduce le etichette
+            document.getElementById('date-label').textContent = translation.dateLabel;
+            document.getElementById('overall-label').textContent = translation.overallLabel;
+            document.getElementById('food-label').textContent = translation.foodLabel;
+            document.getElementById('service-label').textContent = translation.serviceLabel;
+            document.getElementById('ambience-label').textContent = translation.ambienceLabel;
+            document.getElementById('recommend-label').textContent = translation.recommendLabel;
+            document.getElementById('additional-comments-label').textContent = translation.additionalCommentsLabel;
+            
+            // Traduce le opzioni di selezione
+            document.getElementById('select-option').textContent = translation.selectOption;
+            document.getElementById('definitely-option').textContent = translation.definitelyOption;
+            document.getElementById('probably-option').textContent = translation.probablyOption;
+            document.getElementById('not-sure-option').textContent = translation.notSureOption;
+            document.getElementById('probably-not-option').textContent = translation.probablyNotOption;
+            document.getElementById('definitely-not-option').textContent = translation.definitelyNotOption;
+            
+            // Traduce i pulsanti
+            document.getElementById('continue-btn1').textContent = translation.continueBtn;
+            document.getElementById('continue-btn2').textContent = translation.continueBtn;
+            document.getElementById('continue-btn3').textContent = translation.continueBtn;
+            document.getElementById('continue-btn4').textContent = translation.continueBtn;
+            document.getElementById('submit-btn').textContent = translation.submitBtn;
+            
+            // Traduce il messaggio di ringraziamento
+            document.getElementById('thank-you-title').textContent = translation.thankYouTitle;
+            document.getElementById('thank-you-message').textContent = translation.thankYouMessage;
+            
+            // Aggiorna le etichette delle domande di follow-up se sono visibili
+            if (document.getElementById('food-follow-up').style.display !== 'none') {
+                const foodRating = document.querySelector('input[name="food-rating"]:checked')?.value || 0;
+                document.getElementById('food-follow-label').textContent = 
+                    foodRating >= 4 ? translation.foodPositiveFollow : translation.foodNegativeFollow;
+            }
+            
+            if (document.getElementById('service-follow-up').style.display !== 'none') {
+                const serviceRating = document.querySelector('input[name="service-rating"]:checked')?.value || 0;
+                document.getElementById('service-follow-label').textContent = 
+                    serviceRating >= 4 ? translation.servicePositiveFollow : translation.serviceNegativeFollow;
+            }
+            
+            if (document.getElementById('ambience-follow-up').style.display !== 'none') {
+                const ambienceRating = document.querySelector('input[name="ambience-rating"]:checked')?.value || 0;
+                document.getElementById('ambience-follow-label').textContent = 
+                    ambienceRating >= 4 ? translation.ambiencePositiveFollow : translation.ambienceNegativeFollow;
+            }
+        }
+        
+        // Gestire il cambio di lingua
+        document.querySelectorAll('.language-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Rimuovi la classe active da tutti i pulsanti
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                // Aggiungi la classe active al pulsante cliccato
+                this.classList.add('active');
+                // Traduce l'interfaccia
+                translateUI(this.getAttribute('data-lang'));
+            });
+        });
+        
         // Gestire le valutazioni a stelle
         document.querySelectorAll('.star-rating').forEach(function(ratingGroup) {
             const ratingInputs = ratingGroup.querySelectorAll('input');
@@ -318,6 +525,8 @@
                 input.addEventListener('change', function() {
                     const ratingValue = this.value;
                     const ratingId = this.name;
+                    const currentLang = document.querySelector('.language-btn.active').getAttribute('data-lang');
+                    const translation = translations[currentLang];
                     
                     // Mostra domande di follow-up basate sulla valutazione
                     if (ratingId === 'food-rating') {
@@ -326,9 +535,9 @@
                         
                         followUp.style.display = 'block';
                         if (ratingValue >= 4) {
-                            followUpLabel.textContent = 'Cosa ti è piaciuto di più del cibo?';
+                            followUpLabel.textContent = translation.foodPositiveFollow;
                         } else {
-                            followUpLabel.textContent = 'Cosa potremmo migliorare riguardo al cibo?';
+                            followUpLabel.textContent = translation.foodNegativeFollow;
                         }
                     }
                     
@@ -338,9 +547,9 @@
                         
                         followUp.style.display = 'block';
                         if (ratingValue >= 4) {
-                            followUpLabel.textContent = 'Cosa ti è piaciuto del nostro servizio?';
+                            followUpLabel.textContent = translation.servicePositiveFollow;
                         } else {
-                            followUpLabel.textContent = 'Come potremmo migliorare il nostro servizio?';
+                            followUpLabel.textContent = translation.serviceNegativeFollow;
                         }
                     }
                     
@@ -350,9 +559,9 @@
                         
                         followUp.style.display = 'block';
                         if (ratingValue >= 4) {
-                            followUpLabel.textContent = 'Cosa ti è piaciuto dell\'ambiente?';
+                            followUpLabel.textContent = translation.ambiencePositiveFollow;
                         } else {
-                            followUpLabel.textContent = 'Come potremmo migliorare l\'ambiente?';
+                            followUpLabel.textContent = translation.ambienceNegativeFollow;
                         }
                     }
                 });
@@ -361,18 +570,21 @@
         
         // Passaggio alla domanda successiva
         function nextQuestion(currentQuestion) {
+            const currentLang = document.querySelector('.language-btn.active').getAttribute('data-lang');
+            const translation = translations[currentLang];
+            
             // Validazione base
             if (currentQuestion === 1) {
                 const date = document.getElementById('visit-date').value;
                 const rating = document.querySelector('input[name="overall-rating"]:checked');
                 
                 if (!date) {
-                    alert('Per favore, seleziona la data della tua visita.');
+                    alert(translation.dateAlert);
                     return;
                 }
                 
                 if (!rating) {
-                    alert('Per favore, seleziona una valutazione complessiva.');
+                    alert(translation.ratingAlert);
                     return;
                 }
             }
@@ -381,7 +593,7 @@
                 const rating = document.querySelector('input[name="food-rating"]:checked');
                 
                 if (!rating) {
-                    alert('Per favore, valuta la qualità del cibo.');
+                    alert(translation.ratingAlert);
                     return;
                 }
             }
@@ -390,7 +602,7 @@
                 const rating = document.querySelector('input[name="service-rating"]:checked');
                 
                 if (!rating) {
-                    alert('Per favore, valuta il servizio.');
+                    alert(translation.ratingAlert);
                     return;
                 }
             }
@@ -399,7 +611,7 @@
                 const rating = document.querySelector('input[name="ambience-rating"]:checked');
                 
                 if (!rating) {
-                    alert('Per favore, valuta l\'ambiente del ristorante.');
+                    alert(translation.ratingAlert);
                     return;
                 }
             }
@@ -437,26 +649,19 @@
             });
         }
         
-        // Sovrascrivi la funzione submitFeedback poiché ora usiamo Formspree
-        // Lasciamo questa funzione vuota nel caso in cui venga chiamata da qualche parte
-        function submitFeedback() {
-            // La funzionalità di invio è gestita da Formspree
-            return true;
-        }
-        
-        // Aggiungiamo un handler per mostrare il messaggio di successo quando il form viene inviato
+        // Aggiungiamo un handler per la validazione finale quando il form viene inviato
         document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            const currentLang = document.querySelector('.language-btn.active').getAttribute('data-lang');
+            const translation = translations[currentLang];
+            
             // Validazione finale
             const recommend = document.getElementById('recommend').value;
             
             if (!recommend) {
-                alert('Per favore, seleziona se consiglieresti il nostro ristorante.');
+                alert(translation.recommendAlert);
                 event.preventDefault(); // Impedisce l'invio del form
                 return false;
             }
-            
-            // Se la validazione è ok, lasciamo che Formspree gestisca l'invio
-            // Il reindirizzamento e il messaggio di successo saranno gestiti da Formspree
         });
     </script>
 </body>
