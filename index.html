@@ -156,7 +156,7 @@
     </style>
 </head>
 <body>
-    <div id="feedback-form">
+    <form id="feedback-form" action="https://formspree.io/f/mdkepaqd" method="POST">
         <h1>La Tua Esperienza</h1>
         <p class="text-center">Grazie per aver scelto il nostro ristorante. Ci piacerebbe sapere cosa ne pensi.</p>
         
@@ -301,9 +301,9 @@
                 <textarea id="additional-comments" name="additional-comments"></textarea>
             </div>
             
-            <button type="button" onclick="submitFeedback()">Invia feedback</button>
+            <button type="submit">Invia feedback</button>
         </div>
-    </div>
+    </form>
     
     <div id="success-message" class="success-message">
         <h2>Grazie per il tuo feedback!</h2>
@@ -437,39 +437,27 @@
             });
         }
         
-        // Invio del feedback
+        // Sovrascrivi la funzione submitFeedback poiché ora usiamo Formspree
+        // Lasciamo questa funzione vuota nel caso in cui venga chiamata da qualche parte
         function submitFeedback() {
-            // Validazione base
+            // La funzionalità di invio è gestita da Formspree
+            return true;
+        }
+        
+        // Aggiungiamo un handler per mostrare il messaggio di successo quando il form viene inviato
+        document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            // Validazione finale
             const recommend = document.getElementById('recommend').value;
             
             if (!recommend) {
                 alert('Per favore, seleziona se consiglieresti il nostro ristorante.');
-                return;
+                event.preventDefault(); // Impedisce l'invio del form
+                return false;
             }
             
-            // Raccogli tutti i dati
-            const feedbackData = {
-                visitDate: document.getElementById('visit-date').value,
-                overallRating: document.querySelector('input[name="overall-rating"]:checked')?.value,
-                foodRating: document.querySelector('input[name="food-rating"]:checked')?.value,
-                foodComment: document.getElementById('food-comment').value,
-                serviceRating: document.querySelector('input[name="service-rating"]:checked')?.value,
-                serviceComment: document.getElementById('service-comment').value,
-                ambienceRating: document.querySelector('input[name="ambience-rating"]:checked')?.value,
-                ambienceComment: document.getElementById('ambience-comment').value,
-                recommend: document.getElementById('recommend').value,
-                additionalComments: document.getElementById('additional-comments').value
-            };
-            
-            console.log('Feedback inviato:', feedbackData);
-            
-            // In una versione reale, qui ci sarebbe il codice per inviare i dati a un server
-            // Per ora, mostriamo solo un messaggio di successo
-            
-            // Nascondi il modulo e mostra il messaggio di ringraziamento
-            document.getElementById('feedback-form').style.display = 'none';
-            document.getElementById('success-message').style.display = 'block';
-        }
+            // Se la validazione è ok, lasciamo che Formspree gestisca l'invio
+            // Il reindirizzamento e il messaggio di successo saranno gestiti da Formspree
+        });
     </script>
 </body>
 </html>
